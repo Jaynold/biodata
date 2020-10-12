@@ -16,8 +16,8 @@ namespace BioData.Profiles
                 .ForMember("Owner", jData => { jData.MapFrom(jo => jo["owner"]); })
                 .ForMember("Description", jData => { jData.MapFrom(jo => jo["description"]); })
                 .ForMember("Homepage", jData => { jData.MapFrom(jo => jo["homepage"]); })
-                .ForMember("Languages", jData => { jData.MapFrom(jo => jo["language"].Select(lang => new Language { Title = (string)lang })); })
-                .ForMember("ToolTypes", jData => { jData.MapFrom(jo => jo["toolType"].Select(tool => new ToolType { Tool = (string)tool })); })
+                .ForMember("Languages", jData => { jData.MapFrom(jo => jo["language"].Select(lang => new Language { Name = (string)lang })); })
+                .ForMember("ToolTypes", jData => { jData.MapFrom(jo => jo["toolType"].Select(tool => new ToolType { Name = (string)tool })); })
                 .ForMember("OperatingSystems", jData => { jData.MapFrom(jo => jo["operatingSystem"].Select(os => new OperatingSystem { Name = (string)os })); })
                 .ForMember("Links", jData =>
                 {
@@ -26,7 +26,7 @@ namespace BioData.Profiles
                     {
                         Url = (string)link["url"],
                         Note = (string)link["note"],
-                        LinkTypes = link["type"].Select(f => new LinkType { Type = (string)f }).ToList<LinkType>()
+                        LinkTypes = link["type"].Select(type => new LinkType { Name = (string)type }).ToList<LinkType>()
                     }));
                 });
         }

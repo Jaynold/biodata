@@ -13,7 +13,7 @@ namespace BioData.Migrations
                     Id = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Homepage = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
+                    Homepage = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Owner = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false)
                 },
                 constraints: table =>
@@ -27,7 +27,7 @@ namespace BioData.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,7 +40,7 @@ namespace BioData.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace BioData.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Tool = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true)
                 },
                 constraints: table =>
                 {

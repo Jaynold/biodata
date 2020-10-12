@@ -81,7 +81,7 @@ namespace BioData.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search = "All", string property = "OperatingSystems")
+        public async Task<IActionResult> GetAll(string search = "All", string property = "none")
         {
             // await SetSeedData();
             var bios = await _repository.GetAllBioDataAsync(search, property);

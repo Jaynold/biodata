@@ -10,7 +10,7 @@ namespace BioData.Data
         [Key]
         public int Id { get; set; }
         [MaxLength(90)]
-        public string Tool { get; set; }
+        public string Name { get; set; }
         public List<Biodata> Biodata { get; set; }
     }
 }

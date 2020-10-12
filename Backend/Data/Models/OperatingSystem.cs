@@ -11,7 +11,6 @@ namespace BioData.Data
         public int Id { get; set; }
         [MaxLength(90)]
         public string Name { get; set; }
-
         public List<Biodata> Biodata { get; set; }
     }
 }

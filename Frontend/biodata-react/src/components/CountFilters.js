@@ -1,55 +1,58 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useBioDataCount } from "../hooks/useBioDataCount";
 import { Badge } from "antd";
 
-const CountFilters = ({ setFiltered, datasource }) => {
-  const [countedValues, setProperty] = useBioDataCount(false);
-
-  useEffect(() => {
-    setProperty("os");
-  }, [setProperty]);
+const CountFilters = ({ setFiltered, datasource, setSearchTerm }) => {
+  const [countedValues] = useBioDataCount([]);
 
   return (
     <article className="filters-count-section">
       <div className="filter-category">
-        <h3>Operating Sytstems</h3>
-        <ul className="items">
-          {countedValues &&
-            Object.keys(countedValues).map(function (key, index) {
+        {countedValues.map(obj => {
+          return (
+            obj &&
+            Object.keys(obj).map(key1 => {
               return (
-                <li
-                  key={key}
-                  onClick={() =>
-                    setFiltered(
-                      datasource.filter(bio => {
-                        let conditions = bio["operatingSystems"].map(os => {
-                          return (
-                            os?.name &&
-                            os.name.toLowerCase() === key.toLowerCase()
-                          );
-                        });
-
+                <>
+                  <h3>{key1}</h3>
+                  <ul className="items" id={key1}>
+                    {key1 &&
+                      Object.keys(obj[key1]).map(key2 => {
                         return (
-                          conditions.length > 0 &&
-                          conditions.reduce((acc, curr) => acc + curr) > 0
+                          <li
+                            key={key2}
+                            onClick={() => {
+                              setFiltered(
+                                datasource.filter(bio => {
+                                  let conditions = bio[key1].map(property => {
+                                    return (
+                                      property.name.toLowerCase() ===
+                                      key2.toLowerCase()
+                                    );
+                                  });
+
+                                  return (
+                                    conditions.length &&
+                                    conditions.reduce((acc, curr) => acc + curr)
+                                  );
+                                })
+                              );
+                              setSearchTerm(key2);
+                            }}
+                          >
+                            <span style={{ width: "fit-content" }}>{key2}</span>
+                            <span style={{ marginLeft: "auto" }}>
+                              <Badge count={obj[key1][key2]} />
+                            </span>
+                          </li>
                         );
-                      })
-                    )
-                  }
-                >
-                  {key} <Badge count={countedValues[key]} />
-                </li>
+                      })}
+                  </ul>
+                </>
               );
-            })}
-        </ul>
-      </div>
-      <div className="filter-category">
-        <h3>ToolTypes</h3>
-        <ul className="items"></ul>
-      </div>
-      <div className="filter-category">
-        <h3>Links</h3>
-        <ul className="items"></ul>
+            })
+          );
+        })}
       </div>
     </article>
   );

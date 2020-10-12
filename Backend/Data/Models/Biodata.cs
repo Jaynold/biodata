@@ -20,7 +20,7 @@ namespace BioData.Data
         public string Description { get; set; }
 
         [Required]
-        [MaxLength(90)]
+        [DataType(dataType: DataType.Text)]
         public string Homepage { get; set; }
 
         [Required]

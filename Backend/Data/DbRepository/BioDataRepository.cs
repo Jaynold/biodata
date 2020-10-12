@@ -23,13 +23,13 @@ namespace BioData.DbRepository
             IQueryable<string> query;
             switch (property.ToLower())
             {
-                case "os":
+                case "operatingsystems":
                     query = (from tbl in _context.OperatingSystem
                              select tbl.Name);
                     break;
-                case "tools":
+                case "tooltypes":
                     query = (from tbl in _context.ToolType
-                             select tbl.Tool);
+                             select tbl.Name);
                     break;
                 default:
                     return null;
@@ -65,7 +65,7 @@ namespace BioData.DbRepository
         {
             _logger.LogInformation($"Getting all BioDatas");
 
-            if (property.ToLower() == "os")
+            if (property.ToLower() != "none")
             {
                 return await GetCountOfPropertyValues(property);
             }

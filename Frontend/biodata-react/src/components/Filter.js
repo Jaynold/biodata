@@ -1,12 +1,14 @@
 import React from "react";
 
-const Filter = ({ datasource, onFiltered, layout, render }) => {
-  const onSearch = (id, searchText) =>
+const Filter = ({ datasource, onFiltered, layout, render, setSearchTerm }) => {
+  const onSearch = (id, searchText) => {
     onFiltered(
       datasource.filter(f =>
         f[id].toLowerCase().includes(searchText.toLowerCase())
       )
     );
+    setSearchTerm(searchText);
+  };
 
   const filterData = (id, filtervalue) => false;
 

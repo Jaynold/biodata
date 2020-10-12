@@ -16,6 +16,5 @@ namespace BioData.Data
         public List<LinkType> LinkTypes { get; set; }
         public string BiodataId { get; set; }
         public Biodata Biodata { get; set; }
-
     }
 }

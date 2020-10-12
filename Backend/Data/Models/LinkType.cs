@@ -9,8 +9,9 @@ namespace BioData.Data
     {
         [Key]
         public int Id { get; set; }
+
         [MaxLength(90)]
-        public string Type { get; set; }
+        public string Name { get; set; }
         public List<Link> Link { get; set; }
     }
 }

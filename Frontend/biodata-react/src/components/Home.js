@@ -4,7 +4,7 @@ import CountFilters from "./CountFilters";
 import Search from "antd/lib/input/Search";
 import { debounce } from "lodash";
 import { useBioData } from "../hooks/useBioData";
-import { Card, Badge, Pagination, Empty, Spin } from "antd";
+import { Card, Badge, Pagination, Spin, Tag } from "antd";
 import Meta from "antd/lib/card/Meta";
 import {
   AndroidOutlined,
@@ -14,11 +14,10 @@ import {
 
 const Home = () => {
   const [filteredData, setFilteredData] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(false);
   const [biodata, setConfig] = useBioData(false);
-  const [paginationRange, setPaginationRange] = useState({
-    minValue: 0,
-    maxValue: 10,
-  });
+  const [paginationRange, setPaginationRange] = useState(false);
+  const maxPerPage = 12;
 
   useEffect(() => {
     setConfig({ url: "", method: "get" });
@@ -28,7 +27,7 @@ const Home = () => {
     () =>
       setPaginationRange({
         minValue: 0,
-        maxValue: 10,
+        maxValue: maxPerPage,
       }),
     [biodata, filteredData]
   );
@@ -39,6 +38,7 @@ const Home = () => {
       <Filter
         layout="row"
         onFiltered={setFilteredData}
+        setSearchTerm={setSearchTerm}
         datasource={biodata}
         render={(_, onSearch) => {
           return (
@@ -55,9 +55,18 @@ const Home = () => {
       />
 
       <section className="biodata-section">
-        <CountFilters datasource={biodata} setFiltered={setFilteredData} />
+        <CountFilters
+          datasource={biodata}
+          setFiltered={setFilteredData}
+          setSearchTerm={setSearchTerm}
+        />
 
         <article className="biodata-cards-section">
+          <div className="tags" style={{ gridColumn: "span 4" }}>
+            <Tag color="geekblue" closable>
+              {searchTerm}
+            </Tag>
+          </div>
           {!biodata ? (
             <Spin
               style={{
@@ -134,12 +143,12 @@ const Home = () => {
             defaultCurrent={1}
             onChange={value => {
               setPaginationRange({
-                minValue: (value - 1) * 10,
-                maxValue: value * 10,
+                minValue: (value - 1) * maxPerPage,
+                maxValue: value * maxPerPage,
               });
             }}
             total={filteredData.length || biodata.length}
-            defaultPageSize={10}
+            defaultPageSize={maxPerPage}
           />
         </article>
       </section>

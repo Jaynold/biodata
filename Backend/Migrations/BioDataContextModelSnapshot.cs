@@ -30,8 +30,7 @@ namespace BioData.Migrations
 
                     b.Property<string>("Homepage")
                         .IsRequired()
-                        .HasMaxLength(90)
-                        .HasColumnType("nvarchar(90)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -55,7 +54,7 @@ namespace BioData.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .HasMaxLength(90)
                         .HasColumnType("nvarchar(90)");
 
@@ -96,7 +95,7 @@ namespace BioData.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Type")
+                    b.Property<string>("Name")
                         .HasMaxLength(90)
                         .HasColumnType("nvarchar(90)");
 
@@ -128,7 +127,7 @@ namespace BioData.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Tool")
+                    b.Property<string>("Name")
                         .HasMaxLength(90)
                         .HasColumnType("nvarchar(90)");
 
