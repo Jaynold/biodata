@@ -19,9 +19,12 @@ namespace BioData.DbRepository
             _logger = logger;
         }
 
-        public void Add<T>(T entity) where T : class
+        public void AddSeedData<T>(T entity) where T : class
         {
 
+        }
+        public void Add<T>(T entity) where T : class
+        {
             _logger.LogInformation($"Adding an object of type {entity.GetType()} to the context.");
             _context.Add(entity);
         }
@@ -40,20 +43,43 @@ namespace BioData.DbRepository
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public async Task<Biodata[]> GetAllBioDataAsync()
+        public async Task<Biodata[]> GetAllBioDataAsync(string search)
         {
             _logger.LogInformation($"Getting all BioDatas");
 
-            IQueryable<Biodata> query = _context.Biodata;
+            if (search.ToLower() == "all")
+            {
+                var query = _context.Biodata
+                .Include(s => s.Languages)
+                .Include(s => s.Links)
+                .Include(s => s.ToolTypes)
+                .Include(s => s.OperatingSystems);
 
-            return await query.ToArrayAsync();
+                return await query.ToArrayAsync();
+            }
+            else
+            {
+                var query = _context.Biodata
+                .Include(s => s.Languages)
+                .Include(s => s.Links)
+                .Include(s => s.ToolTypes)
+                .Include(s => s.OperatingSystems)
+                .Where(s => s.Name == search);
+
+                return await query.ToArrayAsync();
+            }
         }
 
         public async Task<Biodata> GetBioDataAsync(string biodataid)
         {
             _logger.LogInformation($"Getting a BioData for {biodataid}");
 
-            IQueryable<Biodata> query = _context.Biodata;
+            var query = _context.Biodata
+            .Include(s => s.Languages)
+                .Include(s => s.Links)
+                .Include(s => s.ToolTypes)
+                .Include(s => s.OperatingSystems)
+                .Where(s => s.Name == biodataid);
             return await query.FirstOrDefaultAsync();
         }
     }

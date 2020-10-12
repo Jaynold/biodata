@@ -1,0 +1,31 @@
+#heading {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.App {
+  width: var(--content-width);
+  margin: 0 auto;
+}
+
+.filters {
+  display: grid;
+  margin: 1rem auto;
+}
+
+.biodata-section {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.filters-count-section {
+  width: 300px;
+}
+
+.biodata-cards-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  gap: 1rem;
+}

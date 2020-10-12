@@ -7,17 +7,29 @@ namespace BioData.Data
     public class Biodata
     {
         [Key]
-        [MaxLength(15)]
+        [MaxLength(90)]
+        [Required]
         public string Id { get; set; }
-        [MaxLength(15)]
+
+        [Required]
+        [MaxLength(90)]
         public string Name { get; set; }
-        [MaxLength(45)]
+
+        [Required]
+        [MaxLength(90)]
         public string Description { get; set; }
-        [MaxLength(20)]
+
+        [Required]
+        [MaxLength(90)]
         public string Homepage { get; set; }
+
+        [Required]
+        [MaxLength(90)]
+        public string Owner { get; set; }
+
         public List<Language> Languages { get; set; }
-        public List<Link> Links { get; set; }
+        public virtual List<Link> Links { get; set; }
         public List<OperatingSystem> OperatingSystems { get; set; }
-        public List<ToolType> ToolType { get; set; }
+        public List<ToolType> ToolTypes { get; set; }
     }
 }

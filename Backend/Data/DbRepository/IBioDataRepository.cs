@@ -6,13 +6,12 @@ namespace BioData.DbRepository
     public interface IBioDataRepository
     {
         // General 
+        void AddSeedData<T>(T entity) where T : class;
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveChangesAsync();
-
-        // Biodatas
-        Task<Biodata[]> GetAllBioDataAsync();
-        Task<Biodata> GetBioDataAsync(string biodataid);
+        Task<Biodata[]> GetAllBioDataAsync(string search);
+        Task<Biodata> GetBioDataAsync(string biodataID);
         // // Talks
         // Task<Talk> GetTalkByMonikerAsync(string moniker, int talkId, bool includeSpeakers = false);
         // Task<Talk[]> GetTalksByMonikerAsync(string moniker, bool includeSpeakers = false);

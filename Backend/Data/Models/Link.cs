@@ -9,12 +9,13 @@ namespace BioData.Data
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        [MaxLength(30)]
+        [MaxLength(90)]
         public string Url { get; set; }
-        [Required]
-        [MaxLength(20)]
+        [MaxLength(90)]
         public string Note { get; set; }
         public List<LinkType> LinkTypes { get; set; }
+        public string BiodataId { get; set; }
+        public Biodata Biodata { get; set; }
+
     }
 }
