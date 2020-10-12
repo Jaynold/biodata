@@ -7,16 +7,17 @@ export const useBioData = init => {
 
   useEffect(() => {
     let didCancel = false;
-    const executeQuery = async () => {
-      let result;
-      result = await Axios.request({
+    const executeFetchQuery = async () => {
+      let fetchResult = await Axios.request({
         ...config,
         baseURL: process.env.REACT_APP_BASE_URL,
       });
-      setResponse(result.data);
+      setResponse(fetchResult.data);
     };
 
-    if (!didCancel && config) executeQuery();
+    if (!didCancel && config) {
+      executeFetchQuery();
+    }
 
     return () => (didCancel = true);
   }, [config]);

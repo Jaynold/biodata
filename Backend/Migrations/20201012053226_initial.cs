@@ -12,7 +12,7 @@ namespace BioData.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Homepage = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
                     Owner = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false)
                 },

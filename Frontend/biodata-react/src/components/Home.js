@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Filter from "./Filter";
+import CountFilters from "./CountFilters";
 import Search from "antd/lib/input/Search";
 import { debounce } from "lodash";
 import { useBioData } from "../hooks/useBioData";
@@ -19,7 +20,18 @@ const Home = () => {
     maxValue: 10,
   });
 
-  useEffect(() => setConfig({ url: "", method: "get" }), [setConfig]);
+  useEffect(() => {
+    setConfig({ url: "", method: "get" });
+  }, [setConfig]);
+
+  useEffect(
+    () =>
+      setPaginationRange({
+        minValue: 0,
+        maxValue: 10,
+      }),
+    [biodata, filteredData]
+  );
 
   return (
     <>
@@ -43,20 +55,7 @@ const Home = () => {
       />
 
       <section className="biodata-section">
-        <article className="filters-count-section">
-          <div className="filter-category">
-            <h3>Operating Sytstems</h3>
-            <ul className="items"></ul>
-          </div>
-          <div className="filter-category">
-            <h3>ToolTypes</h3>
-            <ul className="items"></ul>
-          </div>
-          <div className="filter-category">
-            <h3>Links</h3>
-            <ul className="items"></ul>
-          </div>
-        </article>
+        <CountFilters datasource={biodata} setFiltered={setFilteredData} />
 
         <article className="biodata-cards-section">
           {!biodata ? (

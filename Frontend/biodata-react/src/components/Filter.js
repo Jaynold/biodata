@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const Filter = ({ datasource, onFiltered, layout, render }) => {
-  const [filters, setFilters] = useState(false);
-
   const onSearch = (id, searchText) =>
     onFiltered(
       datasource.filter(f =>

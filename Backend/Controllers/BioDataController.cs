@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -33,9 +34,9 @@ namespace BioData.Controllers
             return client;
         }
 
-        public async void SetSeedData()
+        public async Task SetSeedData()
         {
-            for (var index = 0; index < 11; index++)
+            for (var index = 1; index < 15; index++)
             {
                 string baseUrl = $"https://bio.tools/api/tool/?page={index}&format=json&collectionID=vib";
                 //Have your using statements within a try/catch block
@@ -58,11 +59,10 @@ namespace BioData.Controllers
                                     var results = JObject.Parse(data);
                                     var bios = new List<Biodata>();
                                     var biolist = results["list"];
-                                    for (int i = 0; i < 10; i++)
-                                    {
+                                    for (int i = 0; i < ((IList)results["list"]).Count; i++)
                                         _repository.Add<Biodata>(_mapper.Map<Biodata>(biolist[i]));
-                                    }
                                     await _repository.SaveChangesAsync();
+                                    Console.WriteLine($"Page {index} done");
                                 }
                                 else
                                 {
@@ -81,9 +81,14 @@ namespace BioData.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(string search = "All")
+        public async Task<IActionResult> GetAll(string search = "All", string property = "OperatingSystems")
         {
-            var bios = await _repository.GetAllBioDataAsync(search);
+            // await SetSeedData();
+            var bios = await _repository.GetAllBioDataAsync(search, property);
+            if (bios == null)
+            {
+                return NotFound("Couldn't find any bios!");
+            }
             return Ok(bios);
         }
 

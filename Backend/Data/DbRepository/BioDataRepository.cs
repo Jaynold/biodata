@@ -18,6 +18,24 @@ namespace BioData.DbRepository
             _context = context;
             _logger = logger;
         }
+        public async Task<string[]> GetCountOfPropertyValues(string property)
+        {
+            IQueryable<string> query;
+            switch (property.ToLower())
+            {
+                case "os":
+                    query = (from tbl in _context.OperatingSystem
+                             select tbl.Name);
+                    break;
+                case "tools":
+                    query = (from tbl in _context.ToolType
+                             select tbl.Tool);
+                    break;
+                default:
+                    return null;
+            }
+            return await query.ToArrayAsync();
+        }
 
         public void AddSeedData<T>(T entity) where T : class
         {
@@ -43,30 +61,37 @@ namespace BioData.DbRepository
             return (await _context.SaveChangesAsync()) > 0;
         }
 
-        public async Task<Biodata[]> GetAllBioDataAsync(string search)
+        public async Task<object> GetAllBioDataAsync(string search, string property)
         {
             _logger.LogInformation($"Getting all BioDatas");
 
-            if (search.ToLower() == "all")
+            if (property.ToLower() == "os")
             {
-                var query = _context.Biodata
-                .Include(s => s.Languages)
-                .Include(s => s.Links)
-                .Include(s => s.ToolTypes)
-                .Include(s => s.OperatingSystems);
-
-                return await query.ToArrayAsync();
+                return await GetCountOfPropertyValues(property);
             }
             else
             {
-                var query = _context.Biodata
-                .Include(s => s.Languages)
-                .Include(s => s.Links)
-                .Include(s => s.ToolTypes)
-                .Include(s => s.OperatingSystems)
-                .Where(s => s.Name == search);
+                if (search.ToLower() == "all")
+                {
+                    var query = _context.Biodata
+                    .Include(s => s.Languages)
+                    .Include(s => s.Links)
+                    .Include(s => s.ToolTypes)
+                    .Include(s => s.OperatingSystems);
 
-                return await query.ToArrayAsync();
+                    return await query.ToArrayAsync();
+                }
+                else
+                {
+                    var query = _context.Biodata
+                    .Include(s => s.Languages)
+                    .Include(s => s.Links)
+                    .Include(s => s.ToolTypes)
+                    .Include(s => s.OperatingSystems)
+                    .Where(s => s.Name == search);
+
+                    return await query.ToArrayAsync();
+                }
             }
         }
 

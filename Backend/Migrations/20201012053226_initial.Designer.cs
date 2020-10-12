@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BioData.Migrations
 {
     [DbContext(typeof(BioDataContext))]
-    [Migration("20201011190015_initial")]
+    [Migration("20201012053226_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,8 +28,7 @@ namespace BioData.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(90)
-                        .HasColumnType("nvarchar(90)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Homepage")
                         .IsRequired()
